@@ -1,8 +1,11 @@
 rules_version = '2';
-// 증강팡 랭킹 규칙: 누구나 읽기, 자기 기록(모음/자기uid)만 쓰기, 값 모양 검사
+// 증강팡 랭킹 규칙: 누구나 읽기, 닉네임 계정으로 로그인한 사람만 자기 기록(모음/자기uid) 쓰기, 값 모양 검사
 // rank = 스테이지 모드, rankQuick = 1분 모드, rankInf = 무한 모드
 service cloud.firestore {
   match /databases/{database}/documents {
+    function me(uid) {
+      return request.auth != null && request.auth.uid == uid && request.auth.token.firebase.sign_in_provider == 'password';
+    }
     function base(d) {
       return d.nick is string && d.nick.size() > 0 && d.nick.size() <= 12
         && d.score is int && d.score >= 0
@@ -10,7 +13,7 @@ service cloud.firestore {
     }
     match /rank/{uid} {
       allow read: if true;
-      allow create, update: if request.auth != null && request.auth.uid == uid
+      allow create, update: if me(uid)
         && request.resource.data.keys().hasOnly(['nick', 'stage', 'score', 'key', 'augs', 'at'])
         && base(request.resource.data) && request.resource.data.score < 1000000000
         && request.resource.data.stage is int && request.resource.data.stage >= 1 && request.resource.data.stage <= 300
@@ -19,7 +22,7 @@ service cloud.firestore {
     }
     match /rankQuick/{uid} {
       allow read: if true;
-      allow create, update: if request.auth != null && request.auth.uid == uid
+      allow create, update: if me(uid)
         && request.resource.data.keys().hasOnly(['nick', 'score', 'key', 'augs', 'at'])
         && base(request.resource.data) && request.resource.data.score < 100000000
         && request.resource.data.key == request.resource.data.score;
@@ -27,7 +30,7 @@ service cloud.firestore {
     }
     match /rankInf/{uid} {
       allow read: if true;
-      allow create, update: if request.auth != null && request.auth.uid == uid
+      allow create, update: if me(uid)
         && request.resource.data.keys().hasOnly(['nick', 'wave', 'score', 'key', 'augs', 'at'])
         && base(request.resource.data) && request.resource.data.score < 1000000000000
         && request.resource.data.wave is int && request.resource.data.wave >= 1 && request.resource.data.wave <= 100000
