@@ -55,6 +55,8 @@ open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(head + src.r
 sw = open(os.path.join(ROOT, 'sw.js'), encoding='utf-8').read()
 sw = re.sub(r"const CACHE = '[^']*';", f"const CACHE = 'jkp-{ver}';", sw)
 open(os.path.join(ROOT, 'sw.js'), 'w', encoding='utf-8').write(sw)
+gv = re.search(r'const GAME_VER = (\d+);', src)
+open(os.path.join(ROOT, 'version.json'), 'w').write(json.dumps({'v': int(gv.group(1)) if gv else 0}) + '\n')   # 게임이 새 버전을 확인하는 파일
 open(os.path.join(ROOT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\nSitemap: {URL}sitemap.xml\n')
 open(os.path.join(ROOT, 'sitemap.xml'), 'w').write(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>{URL}</loc><changefreq>weekly</changefreq><priority>1.0</priority></url></urlset>\n')
 print('built', ver, URL, 'firebase' if fire != 'null' else 'no-firebase')

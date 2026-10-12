@@ -2004,7 +2004,7 @@ function mission(id, v) {
   store.set('missions', m);
 }
 /* ---------- 재화 · 아이템 ---------- */
-const GAME_VER = 33;   // 설정 화면 맨 아래에 작게 보임(어느 버전이 실행 중인지 확인용) — 고칠 때마다 올리기
+const GAME_VER = 34;   // 설정 화면 맨 아래에 작게 보임(어느 버전이 실행 중인지 확인용) — 고칠 때마다 올리기
 const DEBUG_RICH = false;   // 디버그(테스트) 판에서만 true: 별사탕·구슬 99,999 고정, 써도 줄지 않음, 랭킹 끔
 const wallet = () => DEBUG_RICH ? {candy:99999, marble:99999} : Object.assign({candy:0, marble:0}, store.get('wallet', {}));
 function addWallet(c = 0, m = 0) { if (DEBUG_RICH) { refreshWallet(); return wallet(); } const w = wallet(); w.candy = Math.max(0, w.candy + c); w.marble = Math.max(0, w.marble + m); store.set('wallet', w); refreshWallet(); return w; }
@@ -4113,6 +4113,7 @@ function drawRain(dt) {
 window.addEventListener('resize', () => { if (ov.classList.contains('title')) sizeRain(); });
 function showTitle() {
   S.mode = 'title'; RANK.view = null; S.quick = false;
+  if (window.__verAtTitle) setTimeout(window.__verAtTitle, 0);   // 웹: 새 버전이 있으면 첫 화면에서 새로 불러오기
   document.body.classList.remove('tut', 'is-fever', 'low', 'inf', 'quick'); $('coach').hidden = true;
   const runs = store.get('runs', []), b = runs[0], tutDone = store.get('tut', false);
   const sv = store.get('save-stage', null), si = store.get('save-inf', null), ib = store.get('inf-best', null), qb = store.get('quick-best', null);
@@ -5138,7 +5139,7 @@ if (ON_WEB) {
   // → 화면을 누를 때마다(필요하면) 기록 칸을 새로 깔아서, 뒤로 가기를 늘 게임이 먼저 받게 한다
   let armed = 0, leaving = false, guardOk = false;
   const pushGuard = () => { try { history.pushState({jkp:1}, ''); } catch (e) {} };
-  try { history.replaceState({jkp:0}, ''); } catch (e) {}
+  try { history.replaceState({jkp:0}, '', /[?&]v=/.test(location.search) ? location.pathname + location.hash : location.href); } catch (e) {}   // 새 버전으로 불러올 때 붙인 ?v= 는 주소에서 지운다
   pushGuard();
   const onGesture = () => { if (!guardOk) { guardOk = true; pushGuard(); } };
   addEventListener('pointerdown', onGesture, true);
@@ -5156,6 +5157,24 @@ if (ON_WEB) {
     }
     armed = Date.now(); window.__onBack(); pushGuard();
   });
+  // 새 버전 확인: 예전 주소·카톡 같은 앱 안 브라우저·저장된 화면으로 열려도, 서버에 더 새 버전이 있으면 첫 화면에서 새로 불러온다
+  if (window.JKP_FIREBASE && location.protocol === 'https:') {
+    let lastCheck = 0;
+    const checkVer = async () => {
+      if (Date.now() - lastCheck < 60e3) return; lastCheck = Date.now();
+      try {
+        const r = await fetch('version.json?t=' + Date.now(), {cache:'no-store'}); if (!r.ok) return;
+        const v = +(await r.json()).v || 0; if (v <= GAME_VER) return;
+        const key = 'jkp-reload-' + v;
+        try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, '1'); } catch (e) {}
+        window.__verPending = v; if (S.mode === 'title') goNew();
+      } catch (e) {}
+    };
+    const goNew = () => { const v = window.__verPending; if (!v) return; window.__verPending = 0; saveGame(); location.replace(location.pathname + '?v=' + v); };
+    window.__verAtTitle = () => { if (window.__verPending) goNew(); else checkVer(); };
+    setTimeout(checkVer, 1500);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) checkVer(); });
+  }
   // 화면을 떠날 때 저장 (탭 닫기·앱 전환)
   addEventListener('pagehide', () => { try { saveGame(); } catch (e) {} });
   // 길게 눌러 나오는 메뉴·끌어서 새로고침 막기

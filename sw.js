@@ -1,5 +1,5 @@
 // 증강팡 서비스 워커: 게임 파일을 저장해 두고(오프라인에서도 실행), 인터넷이 되면 게임 화면은 늘 새 버전으로
-const CACHE = 'jkp-v33';
+const CACHE = 'jkp-v34';
 const CORE = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png", "fonts/fonts.css"];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
@@ -8,6 +8,7 @@ self.addEventListener('fetch', e => {
   const url = new URL(req.url);
   const mine = url.origin === location.origin, font = /fonts\.(googleapis|gstatic)\.com$/.test(url.hostname);
   if (!mine && !font) return;   // 랭킹(Firebase) 같은 바깥 요청은 저장하지 않고 그대로 보낸다
+  if (mine && /version\.json$/.test(url.pathname)) return;   // 새 버전 확인은 늘 서버에 직접
   if (req.mode === 'navigate' || (mine && /\/(index\.html)?$/.test(url.pathname))) {
     // 게임 화면은 새 버전부터: 인터넷이 되면 바로 새로 받고(3초 넘으면 저장본), 안 되면 저장본으로
     e.respondWith(caches.open(CACHE).then(async c => {
