@@ -1,0 +1,17 @@
+{
+  "name": "증강팡 · Augment Pop",
+  "short_name": "증강팡",
+  "description": "맞추고, 증강을 골라 더 멀리 가는 매치-3 퍼즐",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffeccc",
+  "theme_color": "#a9d8ff",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
