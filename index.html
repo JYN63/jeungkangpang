@@ -425,7 +425,8 @@ body.quick .stage b{font-size:28px}
 .sharecard{display:block;width:100%;border-radius:18px;box-shadow:0 6px 18px rgba(120,70,40,.25);-webkit-user-select:auto;user-select:auto;-webkit-touch-callout:default}
 /* v17: 지갑 · 상점 · 업적 · 아이템 · 음량 */
 html.on-web,html.on-web body{overscroll-behavior:none}
-html.on-web button,html.on-web canvas{touch-action:manipulation}
+html.on-web button{touch-action:manipulation}
+#board,#wrap{touch-action:none;-webkit-user-select:none;user-select:none}
 html.on-web body{-webkit-touch-callout:none}
 .installbtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:46px;border:2px dashed var(--rim);border-radius:16px;background:rgba(255,255,255,.75);color:var(--ink);font:var(--dw) 16px var(--display);cursor:pointer}
 .installbtn .ico{width:30px;height:30px;padding:0;background:none}
@@ -4083,25 +4084,41 @@ function cellAt(e) {
   return (r >= 0 && c >= 0 && r < N && c < N) ? [r, c] : null;
 }
 const canAct = () => !S.busy && ((S.mode === 'play' && S.time > 0) || S.mode === 'tut');
-cv.addEventListener('pointerdown', e => {
+function dragStart(e, id) {
   if (!canAct()) return;
   const cell = cellAt(e); if (!cell) return;
-  try { cv.setPointerCapture(e.pointerId); } catch (_) {}
-  drag = {cell, x:e.clientX, y:e.clientY, moved:false};
+  if (id != null) try { cv.setPointerCapture(id); } catch (_) {}
+  drag = {cell, x:e.clientX, y:e.clientY, moved:false, id};
   S.idle = 0;
   const T = grid[cell[0]][cell[1]]; if (T) T.pop = Math.max(T.pop, .35);
-});
-cv.addEventListener('pointermove', e => {
+}
+function dragMove(e) {
   if (!drag || drag.moved || !canAct() || S.tool === 'hammer') return;
-  const dx = e.clientX - drag.x, dy = e.clientY - drag.y, th = cv.getBoundingClientRect().width / N * .35;
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y, th = cv.getBoundingClientRect().width / N * .3;
   if (Math.max(Math.abs(dx), Math.abs(dy)) < th) return;
   const [r, c] = drag.cell;
   const t = Math.abs(dx) > Math.abs(dy) ? [r, c + Math.sign(dx)] : [r + Math.sign(dy), c];
   drag.moved = true;
   if (t[0] >= 0 && t[1] >= 0 && t[0] < N && t[1] < N) trySwap(drag.cell, t);
-});
-cv.addEventListener('pointerup', () => { if (drag && !drag.moved && canAct()) tapCell(drag.cell); drag = null; });
-cv.addEventListener('pointercancel', () => drag = null);
+}
+function dragEnd(e) { if (drag && !drag.moved && canAct()) tapCell(drag.cell); drag = null; }
+if (window.PointerEvent) {
+  cv.addEventListener('pointerdown', e => { if (e.isPrimary !== false) dragStart(e, e.pointerId); });
+  cv.addEventListener('pointermove', e => { if (drag && (drag.id == null || e.pointerId === drag.id)) dragMove(e); });
+  cv.addEventListener('pointerup', e => { if (drag && (drag.id == null || e.pointerId === drag.id)) dragEnd(e); });
+  cv.addEventListener('pointercancel', () => drag = null);
+} else {   // 포인터 이벤트가 없는 오래된 브라우저·웹뷰
+  const pt = e => e.changedTouches && e.changedTouches[0];
+  cv.addEventListener('touchstart', e => { const p = pt(e); if (p) dragStart(p, null); }, {passive:true});
+  cv.addEventListener('touchmove', e => { const p = pt(e); if (p) dragMove(p); }, {passive:true});
+  cv.addEventListener('touchend', e => { const p = pt(e); if (e.cancelable) e.preventDefault(); if (p) dragEnd(p); });   // 뒤따르는 가짜 마우스 이벤트로 두 번 눌리지 않게
+  cv.addEventListener('touchcancel', () => drag = null);
+  cv.addEventListener('mousedown', e => dragStart(e, null));
+  addEventListener('mousemove', e => dragMove(e));
+  addEventListener('mouseup', e => { if (drag) dragEnd(e); });
+}
+// touch-action을 무시하는 기기에서도 판 위에서 밀 때 화면이 끌려가거나 새로고침되지 않게
+cv.addEventListener('touchmove', e => { if (e.cancelable) e.preventDefault(); }, {passive:false});
 function tapCell([r, c]) {
   if (S.tool === 'hammer') { hammer(r, c); return; }
   if (S.sel) {
