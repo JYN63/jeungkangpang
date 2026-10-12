@@ -1986,6 +1986,7 @@ function mission(id, v) {
   store.set('missions', m);
 }
 /* ---------- 재화 · 아이템 ---------- */
+const GAME_VER = 31;   // 설정 화면 맨 아래에 작게 보임(어느 버전이 실행 중인지 확인용) — 고칠 때마다 올리기
 const DEBUG_RICH = false;   // 디버그(테스트) 판에서만 true: 별사탕·구슬 99,999 고정, 써도 줄지 않음, 랭킹 끔
 const wallet = () => DEBUG_RICH ? {candy:99999, marble:99999} : Object.assign({candy:0, marble:0}, store.get('wallet', {}));
 function addWallet(c = 0, m = 0) { if (DEBUG_RICH) { refreshWallet(); return wallet(); } const w = wallet(); w.candy = Math.max(0, w.candy + c); w.marble = Math.max(0, w.marble + m); store.set('wallet', w); refreshWallet(); return w; }
@@ -4028,7 +4029,7 @@ function openSettings(back, title) {
         <div class="volrow"><input type="range" min="0" max="100" step="5" id="svol" value="${VOL.s}" aria-label="${T('setSfxVol')}"><b id="svolN">${VOL.s ? VOL.s + '%' : T('off')}</b></div></div>
       <div class="setgroup"><p class="setlbl">${T('setSong')}</p>
         <div class="songs">${['auto', 'random', ...SONG_IDS].map(id => `<button class="lang ${store.get('song', 'auto') === id ? 'on' : ''}" data-song="${id}" aria-pressed="${store.get('song', 'auto') === id}">${id === 'auto' ? T('songAuto') : id === 'random' ? T('songRandom') : (songOwned(id) ? '' : '🔒 ') + T('songs')[id]}</button>`).join('')}</div>
-        <p class="setcredit">${T('instCredit')}</p></div>
+        <p class="setcredit">${T('instCredit')}</p><p class="setcredit">v${GAME_VER}${window.JKP_FIREBASE ? ' · web' : ''}</p></div>
       <button class="primary" id="setDone">${T('done')}</button>`, title);
     $('sheet').querySelectorAll('[data-lang]').forEach(b => b.onclick = () => { setLang(b.dataset.lang); SFX.pick(); render(); });
     const vol = (id, key, k) => {
