@@ -205,6 +205,9 @@ canvas{display:block;width:100%;touch-action:none;border-radius:16px}
 .submit p.err{color:var(--verm)}
 
 .tabs{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--paper2)}
+.rkmodes{display:flex;gap:6px;margin:0 0 8px}
+.rkmode{flex:1;min-height:40px;padding:0 6px;border:2px solid var(--rim);border-radius:12px;background:rgba(255,255,255,.7);color:var(--muted);font:var(--dw) 15px var(--display);cursor:pointer;line-height:1.1}
+.rkmode.on{border-color:transparent;background:var(--gold);color:#fff;text-shadow:0 1px 0 #c7801f;box-shadow:0 3px 0 #c7801f}
 .tab{flex:1;height:38px;border:0;border-radius:11px;background:transparent;color:var(--muted);font:var(--dw) 16px var(--display);cursor:pointer}
 .tab.on{background:#fff;color:var(--ink);box-shadow:0 2px 0 var(--rim)}
 .ranks{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;max-height:min(52vh,420px);overflow-y:auto}
@@ -884,7 +887,7 @@ I18N.ko = {
   nickLabel:'랭킹에 표시할 이름', nickPh:'12자까지', submit:'등록', submitNote:'랭킹에는 내 최고 기록 하나만 남아요.',
   nickEmpty:'이름을 한 글자 이상 적어 주세요.', submitting:'등록하는 중…', keptHigher:'이미 등록된 기록이 더 높아서 그대로 둘게요.',
   submitted:'전체 랭킹에 등록했어요.', submitBlocked:'이 화면에서는 랭킹에 기록을 등록할 수 없어요.', submitFail:'등록하지 못했어요. 잠시 뒤에 다시 눌러 주세요.',
-  rankEyebrow:'랭킹', rankTitle:'명예의 전당', tabAll:'전체', tabMe:'내 기록', back:'돌아가기', noAugs:'증강 없음',
+  rkStage:'스테이지', rkQuick:'1분', rkInf:'무한', waveN:l => `${l}단계`, rankEyebrow:'랭킹', rankTitle:'명예의 전당', tabAll:'전체', tabMe:'내 기록', back:'돌아가기', noAugs:'증강 없음',
   rankFail:"지금은 전체 랭킹을 불러올 수 없어요. '내 기록' 탭에서 이 기기 기록을 볼 수 있어요.", rankLoading:'랭킹을 불러오는 중…',
   rankEmpty:'아직 등록된 기록이 없어요. 한 판 끝내고 첫 번째 주인공이 되어 보세요.',
   rankInviteOnly:'랭킹 등록은 초대받은 플레이어만 할 수 있어요. 게임과 랭킹 구경은 누구나 할 수 있어요.',
@@ -1069,7 +1072,7 @@ I18N.en = {
   nickLabel:'Your leaderboard name', nickPh:'Up to 12 characters', submit:'Submit', submitNote:'Only your best score stays on the leaderboard.',
   nickEmpty:'Please enter at least one character.', submitting:'Submitting…', keptHigher:'Your existing record is higher, so we kept it.',
   submitted:'Added to the global leaderboard!', submitBlocked:"Records can't be submitted from this screen.", submitFail:"Couldn't submit. Please try again in a moment.",
-  rankEyebrow:'Leaderboard', rankTitle:'Hall of Fame', tabAll:'Global', tabMe:'My records', back:'Back', noAugs:'No augments',
+  rkStage:'Stage', rkQuick:'1-Minute', rkInf:'Endless', waveN:l => `Wave ${l}`, rankEyebrow:'Leaderboard', rankTitle:'Hall of Fame', tabAll:'Global', tabMe:'My records', back:'Back', noAugs:'No augments',
   rankFail:"Couldn't load the global leaderboard right now. You can still see this device's records in the 'My records' tab.", rankLoading:'Loading leaderboard…',
   rankEmpty:'No records yet. Finish a run and claim the top spot!',
   rankInviteOnly:'Only invited players can post to the leaderboard, but anyone can play and view it.',
@@ -1254,7 +1257,7 @@ I18N.ja = {
   nickLabel:'ランキングに表示する名前', nickPh:'12文字まで', submit:'登録', submitNote:'ランキングには自己ベストが1件だけ残ります。',
   nickEmpty:'名前を1文字以上入力してください。', submitting:'登録中…', keptHigher:'登録済みの記録のほうが高いので、そのままにします。',
   submitted:'全体ランキングに登録しました。', submitBlocked:'この画面ではランキングに記録を登録できません。', submitFail:'登録できませんでした。しばらくしてからもう一度お試しください。',
-  rankEyebrow:'ランキング', rankTitle:'名誉の殿堂', tabAll:'全体', tabMe:'自分の記録', back:'戻る', noAugs:'オーグメントなし',
+  rkStage:'ステージ', rkQuick:'1分', rkInf:'エンドレス', waveN:l => `ウェーブ${l}`, rankEyebrow:'ランキング', rankTitle:'名誉の殿堂', tabAll:'全体', tabMe:'自分の記録', back:'戻る', noAugs:'オーグメントなし',
   rankFail:'現在、全体ランキングを読み込めません。「自分の記録」タブでこの端末の記録を見られます。', rankLoading:'ランキングを読み込み中…',
   rankEmpty:'まだ記録がありません。1回プレイして、最初のランカーになりましょう！',
   rankInviteOnly:'ランキングへの登録は、招待されたプレイヤーだけができます。ゲームのプレイとランキングの閲覧は、どなたでもできます。',
@@ -1439,7 +1442,7 @@ I18N.zh = {
   nickLabel:'在排行榜上显示的名字', nickPh:'最多12个字', submit:'提交', submitNote:'排行榜上只保留你的最高纪录。',
   nickEmpty:'请至少输入一个字。', submitting:'提交中…', keptHigher:'已提交的纪录更高，保持不变。',
   submitted:'已提交到总排行榜。', submitBlocked:'此页面无法向排行榜提交纪录。', submitFail:'提交失败，请稍后再试。',
-  rankEyebrow:'排行榜', rankTitle:'名人堂', tabAll:'全部', tabMe:'我的纪录', back:'返回', noAugs:'无强化',
+  rkStage:'关卡', rkQuick:'1分钟', rkInf:'无尽', waveN:l => `第${l}波`, rankEyebrow:'排行榜', rankTitle:'名人堂', tabAll:'全部', tabMe:'我的纪录', back:'返回', noAugs:'无强化',
   rankFail:'暂时无法加载总排行榜。可以在“我的纪录”标签页查看本设备的纪录。', rankLoading:'正在加载排行榜…',
   rankEmpty:'还没有纪录。玩完一局，来当第一个上榜的人吧！',
   rankInviteOnly:'只有受邀玩家才能提交纪录。任何人都可以玩游戏和查看排行榜。',
@@ -1624,7 +1627,7 @@ I18N.it = {
   nickLabel:'Nome da mostrare in classifica', nickPh:'Massimo 12 caratteri', submit:'Invia', submitNote:'In classifica resta solo il tuo record migliore.',
   nickEmpty:'Inserisci almeno un carattere.', submitting:'Invio in corso…', keptHigher:'Il tuo record già registrato è più alto, quindi lo manteniamo.',
   submitted:'Aggiunto alla classifica globale.', submitBlocked:'Da questa schermata non è possibile inviare record.', submitFail:'Invio non riuscito. Riprova tra qualche istante.',
-  rankEyebrow:'Classifica', rankTitle:'Albo d’oro', tabAll:'Globale', tabMe:'I miei record', back:'Indietro', noAugs:'Nessun potenziamento',
+  rkStage:'Livelli', rkQuick:'1 minuto', rkInf:'Infinita', waveN:l => `Ondata ${l}`, rankEyebrow:'Classifica', rankTitle:'Albo d’oro', tabAll:'Globale', tabMe:'I miei record', back:'Indietro', noAugs:'Nessun potenziamento',
   rankFail:'Al momento non è possibile caricare la classifica globale. Puoi vedere i record di questo dispositivo nella scheda «I miei record».', rankLoading:'Caricamento classifica…',
   rankEmpty:'Ancora nessun record. Finisci una partita e conquista il primo posto!',
   rankInviteOnly:'Solo i giocatori invitati possono inviare record. Chiunque può giocare e consultare la classifica.',
@@ -1986,7 +1989,7 @@ function mission(id, v) {
   store.set('missions', m);
 }
 /* ---------- 재화 · 아이템 ---------- */
-const GAME_VER = 31;   // 설정 화면 맨 아래에 작게 보임(어느 버전이 실행 중인지 확인용) — 고칠 때마다 올리기
+const GAME_VER = 32;   // 설정 화면 맨 아래에 작게 보임(어느 버전이 실행 중인지 확인용) — 고칠 때마다 올리기
 const DEBUG_RICH = false;   // 디버그(테스트) 판에서만 true: 별사탕·구슬 99,999 고정, 써도 줄지 않음, 랭킹 끔
 const wallet = () => DEBUG_RICH ? {candy:99999, marble:99999} : Object.assign({candy:0, marble:0}, store.get('wallet', {}));
 function addWallet(c = 0, m = 0) { if (DEBUG_RICH) { refreshWallet(); return wallet(); } const w = wallet(); w.candy = Math.max(0, w.candy + c); w.marble = Math.max(0, w.marble + m); store.set('wallet', w); refreshWallet(); return w; }
@@ -3275,6 +3278,9 @@ function endInf(stuck) {
   S.mode = 'over'; document.body.classList.remove('is-fever', 'low');
   SFX.timeup();
   S.infEnd = {stuck, rec};
+  const irun = {wave:S.infLevel, score:Math.round(S.score), augs:S.augs.filter(a => !a.fused).map(a => a.id), at:Date.now()};
+  irun.key = irun.score;
+  S.lastSub = {mode:'inf', run:irun, sent:false}; pushRun('inf', irun);
   earnCandy(S.score); track('games', 1);
   setTimeout(() => { if (S.mode !== 'over') return; renderInfEnd(); SFX.result(rec); if (rec) confetti(); }, 900);
 }
@@ -3292,12 +3298,15 @@ function renderInfEnd() {
     ${rec ? `<p class="newrec">${T('infNewRec')}</p>` : ''}
     ${earnHTML()}
     ${S.augs.length ? `<div class="augs">${chipsHTML()}</div>` : ''}
-    <div class="btnrow"><button class="primary" id="againBtn">${T('infAgain')}</button>
-    <div class="btnrow two"><button class="ghost" id="shareBtn">${T('share')}</button><button class="ghost" id="homeBtn">${T('home')}</button></div></div>`);
+    <div id="submitBox"></div>
+    <div class="btnrow"><button class="primary" id="againBtn">${T('infAgain')}</button><button class="ghost" id="shareBtn">${T('share')}</button>
+    <div class="btnrow two"><button class="ghost" id="rankBtn">${T('viewRank')}</button><button class="ghost" id="homeBtn">${T('home')}</button></div></div>`);
+  $('rankBtn').onclick = () => openRank(renderInfEnd, 'inf');
   animEarn();
   $('againBtn').onclick = startInf;
   $('homeBtn').onclick = showTitle;
   $('shareBtn').onclick = () => openShare({mode:T('modeInf'), label:T('statScore'), score:Math.round(S.score), sub:T('infReached', S.infLevel), rec}, renderInfEnd);
+  renderSubmit();
 }
 
 /* ---------- 결과 화면: 별사탕 ---------- */
@@ -3421,6 +3430,8 @@ function quickEnd() {
   store.set('quick-plays', store.get('quick-plays', 0) + 1);
   track('qplay', 1); track('qscore', score); track('games', 1);
   S.lastQuick = {score, rec, best:rec ? score : best.score};
+  const qrun = {score, key:score, augs:S.augs.filter(a => !a.fused).map(a => a.id), at:Date.now()};
+  S.lastSub = {mode:'quick', run:qrun, sent:false}; pushRun('quick', qrun);
   earnCandy(score);
   SFX.timeup(); if (rec) confetti();
   setTimeout(() => { if (S.mode !== 'over') return; renderQuickEnd(); SFX.result(rec); }, 900);
@@ -3433,12 +3444,15 @@ function renderQuickEnd() {
     ${q.rec ? `<p class="newrec">${T('quickNewRec')}</p>` : `<p class="best">${T('quickBestLine', fmt(q.best))}</p>`}
     ${earnHTML()}
     ${S.augs.length ? `<div class="augs">${chipsHTML()}</div>` : ''}
-    <div class="btnrow"><button class="primary big" id="oneMore">${T('oneMore')}</button>
-    <div class="btnrow two"><button class="ghost" id="shareBtn">${T('share')}</button><button class="ghost" id="homeBtn">${T('home')}</button></div></div>`);
+    <div id="submitBox"></div>
+    <div class="btnrow"><button class="primary big" id="oneMore">${T('oneMore')}</button><button class="ghost" id="shareBtn">${T('share')}</button>
+    <div class="btnrow two"><button class="ghost" id="rankBtn">${T('viewRank')}</button><button class="ghost" id="homeBtn">${T('home')}</button></div></div>`);
+  $('rankBtn').onclick = () => openRank(renderQuickEnd, 'quick');
   animEarn();
   $('oneMore').onclick = startQuick;
   $('homeBtn').onclick = showTitle;
   $('shareBtn').onclick = () => openShare({mode:T('modeQuick'), label:T('statScore'), score:q.score, sub:q.rec ? '' : T('quickBestLine', fmt(q.best)), rec:q.rec}, renderQuickEnd);
+  renderSubmit();
 }
 function resetLevelState() {
   dying.length = parts.length = fx.length = floats.length = 0;
@@ -3523,7 +3537,7 @@ function gameOver() {
   S.total += S.score; SFX.timeup(); store.del('save-stage');
   const run = {stage:S.stage - 1, score:Math.round(S.total), augs:S.augs.filter(a => !a.fused).map(a => a.id), at:Date.now()};
   run.key = run.stage * 1e9 + run.score;
-  S.lastRun = run;
+  S.lastRun = run; S.lastSub = {mode:'stage', run, sent:false};
   const runs = store.get('runs', []);
   const rec = !runs.length || run.key > runs[0].key;
   runs.push(run); runs.sort((p, q) => q.key - p.key); store.set('runs', runs.slice(0, 10));
@@ -3549,13 +3563,18 @@ function renderOver(rec) {
   animEarn();
   $('againBtn').onclick = startRun;
   $('homeBtn').onclick = showTitle;
-  $('rankBtn').onclick = () => openRank(() => renderOver(rec));
+  $('rankBtn').onclick = () => openRank(() => renderOver(rec), 'stage');
   $('shareBtn').onclick = () => openShare({mode:T('modeStage'), label:T('statTotal'), score:run.score, sub:T('cardStage', run.stage), rec}, () => renderOver(rec));
   renderSubmit();
 }
 
 /* ---------- ranking ---------- */
-const RANK = {db:null, uid:null, canWrite:null, list:[], ready:false, failed:false, submitted:false, view:null, pull:null};
+// 랭킹은 모드마다 따로: 스테이지(rank) · 1분(rankQuick) · 무한(rankInf)
+const RANK_COL = {stage:'rank', quick:'rankQuick', inf:'rankInf'};
+const RANK = {db:null, uid:null, canWrite:null, failed:false, view:null, pullers:{},
+  m:{stage:{list:[], ready:false, failed:false}, quick:{list:[], ready:false, failed:false}, inf:{list:[], ready:false, failed:false}},
+  pull(mode) { const f = this.pullers[RANK_COL[mode]]; if (f) f(); }};
+let rankTab = 'all', rankMode = 'stage';
 /* ---------- 공개 웹사이트용 랭킹 (v27): Firebase Firestore를 REST로 직접 부른다 ----------
    Claude 화면에서는 window.claude의 db를 쓰고, 웹사이트에서는 index.html 머리말의 window.JKP_FIREBASE = {apiKey, projectId}가 있을 때 이것을 쓴다.
    기존 랭킹 코드가 쓰던 모양(collection().orderBy().limit().onSnapshot, doc().get/set/update)을 그대로 흉내 낸다.
@@ -3606,8 +3625,8 @@ function fireDB(cfg) {
         limit(n) { q.limit = n; return api; },
         onSnapshot(cb, onErr) {
           let stop = false;
-          const pull = async () => {
-            if (stop || document.hidden) return;
+          const pull = async force => {
+            if (stop || document.hidden || (force !== true && cfg.want && !cfg.want(name))) return;
             try {
               const r = await fetch(`${BASE}:runQuery`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({structuredQuery:q})});
               if (!r.ok) await fail(r);
@@ -3615,8 +3634,8 @@ function fireDB(cfg) {
               cb({docs:rows});
             } catch (e) { if (onErr) onErr(e); }
           };
-          pull(); const t = setInterval(pull, 30000); document.addEventListener('visibilitychange', pull);
-          RANK.pull = pull;   // 기록을 올린 직후 바로 새로 받기
+          pull(); const t = setInterval(pull, 30000); document.addEventListener('visibilitychange', () => pull());
+          RANK.pullers[name] = () => pull(true);   // 랭킹 창을 열 때·기록을 올린 직후 바로 새로 받기
           return () => { stop = true; clearInterval(t); };
         },
       };
@@ -3632,24 +3651,27 @@ function fireDB(cfg) {
       const [cdb, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
       db = cdb; if (user) { RANK.uid = await user.id(); RANK.canWrite = await user.can('data.write'); }
     } else if (window.JKP_FIREBASE && window.JKP_FIREBASE.apiKey) {   // 공개 웹사이트
-      db = fireDB(window.JKP_FIREBASE); RANK.canWrite = true; db.uid().then(u => { RANK.uid = u; refreshRankViews(); }).catch(() => {});
+      db = fireDB(Object.assign({}, window.JKP_FIREBASE, {want:name => !!RANK.view && RANK_COL[rankMode] === name})); RANK.canWrite = true; db.uid().then(u => { RANK.uid = u; refreshRankViews(); }).catch(() => {});
     } else { RANK.failed = true; return; }
     RANK.db = db;
     if (!db) { RANK.failed = true; refreshRankViews(); return; }
-    db.collection('rank').orderBy('key', 'desc').limit(50).onSnapshot(snap => {
-      RANK.list = snap.docs.map(d => Object.assign({id:d.id}, d.data())); RANK.ready = true; RANK.failed = false;
-      if (!RANK.uid && typeof db.uid === 'function') db.uid().then(u => { RANK.uid = u; refreshRankViews(); }).catch(() => {});   // 웹: 로그인이 처음에 실패했어도 다시 시도
-      refreshRankViews();
-    }, () => { if (!RANK.ready) { RANK.failed = true; refreshRankViews(); } });   // 웹은 30초마다 다시 받으니 한 번 실패로 랭킹을 닫지 않음
+    for (const [mode, col] of Object.entries(RANK_COL)) {
+      const st = RANK.m[mode];
+      db.collection(col).orderBy('key', 'desc').limit(50).onSnapshot(snap => {
+        st.list = snap.docs.map(d => Object.assign({id:d.id}, d.data())); st.ready = true; st.failed = false;
+        if (!RANK.uid && typeof db.uid === 'function') db.uid().then(u => { RANK.uid = u; refreshRankViews(); }).catch(() => {});   // 웹: 로그인이 처음에 실패했어도 다시 시도
+        refreshRankViews();
+      }, () => { if (!st.ready) { st.failed = true; refreshRankViews(); } });   // 웹은 30초마다 다시 받으니 한 번 실패로 랭킹을 닫지 않음
+    }
     refreshRankViews();
   } catch (e) { RANK.failed = true; }
 })();
-function refreshRankViews() { if (RANK.view) RANK.view(); if (S.mode === 'over' && $('submitBox')) renderSubmit(); }
+function refreshRankViews() { if (RANK.view && $('rankBack')) RANK.view(); else RANK.view = null; if (S.mode === 'over' && $('submitBox')) renderSubmit(); }
 const canSubmit = () => RANK.db && RANK.uid && RANK.canWrite !== false;
 function renderSubmit() {
-  const box = $('submitBox'); if (!box || !S.lastRun) return;
-  if (!canSubmit() || S.lastRun.stage < 1) { box.innerHTML = ''; box.dataset.state = ''; return; }
-  if (S.lastRun.sent) { box.innerHTML = `<div class="submit"><p class="ok">${T('submitted')}</p></div>`; box.dataset.state = 'done'; return; }
+  const box = $('submitBox'), sub = S.lastSub; if (!box || !sub) return;
+  if (!canSubmit() || (sub.mode === 'stage' ? sub.run.stage < 1 : sub.run.score < 1 || (sub.mode === 'inf' && sub.run.wave < 1))) { box.innerHTML = ''; box.dataset.state = ''; return; }
+  if (sub.sent) { box.innerHTML = `<div class="submit"><p class="ok">${T('submitted')}</p></div>`; box.dataset.state = 'done'; return; }
   if (box.dataset.state === 'form') return;
   box.dataset.state = 'form';
   box.innerHTML = `<form class="submit" id="submitForm">
@@ -3663,15 +3685,16 @@ function renderSubmit() {
     store.set('nick', nick);
     $('submitBtn').disabled = true; msg.className = ''; msg.textContent = T('submitting');
     try {
-      const ref = RANK.db.doc('rank/' + RANK.uid), cur = await ref.get(), run = S.lastRun;
+      const ref = RANK.db.doc(RANK_COL[sub.mode] + '/' + RANK.uid), cur = await ref.get(), run = sub.run;
       if (cur.exists && (cur.data().key || 0) >= run.key) {
         if (cur.data().nick !== nick) await ref.update({nick});
         msg.className = 'ok'; msg.textContent = T('keptHigher');
       } else {
-        await ref.set({nick, stage:run.stage, score:run.score, key:run.key, augs:run.augs.slice(0, 24), at:new Date().toISOString()});
+        const base = {nick, score:run.score, key:run.key, augs:run.augs.slice(0, 24), at:new Date().toISOString()};
+        await ref.set(sub.mode === 'stage' ? Object.assign(base, {stage:run.stage}) : sub.mode === 'inf' ? Object.assign(base, {wave:run.wave}) : base);
         msg.className = 'ok'; msg.textContent = T('submitted');
       }
-      run.sent = true; box.dataset.state = 'done'; SFX.pick(); if (RANK.pull) RANK.pull();
+      sub.sent = true; box.dataset.state = 'done'; SFX.pick(); RANK.pull(sub.mode);
     } catch (err) {
       $('submitBtn').disabled = false;
       msg.className = 'err';
@@ -3680,42 +3703,58 @@ function renderSubmit() {
     }
   };
 }
-let rankTab = 'all';
-function openRank(back) {
+function openRank(back, mode) {
+  if (mode) rankMode = mode;
   const render = () => {
     const rows = rankTab === 'all' ? globalRows() : localRows();
+    const mb = (m, k) => `<button class="rkmode ${rankMode === m ? 'on' : ''}" data-mode="${m}" aria-pressed="${rankMode === m}">${T(k)}</button>`;
     showOv(`
       <p class="eyebrow">${T('rankEyebrow')}</p>
       <h2>${T('rankTitle')}</h2>
+      <div class="rkmodes">${mb('stage', 'rkStage')}${mb('quick', 'rkQuick')}${mb('inf', 'rkInf')}</div>
       <div class="tabs" role="tablist">
         <button class="tab ${rankTab === 'all' ? 'on' : ''}" data-tab="all" role="tab" aria-selected="${rankTab === 'all'}">${T('tabAll')}</button>
         <button class="tab ${rankTab === 'me' ? 'on' : ''}" data-tab="me" role="tab" aria-selected="${rankTab === 'me'}">${T('tabMe')}</button>
       </div>
       <ol class="ranks">${rows}</ol>
       <button class="ghost" id="rankBack">${T('back')}</button>`);
-    $('sheet').querySelectorAll('.tab').forEach(b => b.onclick = () => { rankTab = b.dataset.tab; render(); });
+    $('sheet').querySelectorAll('.tab').forEach(b => b.onclick = () => { rankTab = b.dataset.tab; SFX.pick(); render(); });
+    $('sheet').querySelectorAll('.rkmode').forEach(b => b.onclick = () => { rankMode = b.dataset.mode; SFX.pick(); render(); RANK.pull(rankMode); });
     $('rankBack').onclick = () => { RANK.view = null; back(); };
   };
-  RANK.view = render; render();
+  RANK.view = render; render(); RANK.pull(rankMode);
 }
-function rowHTML(i, nick, d, me) {
+function rowHTML(i, nick, d, me, mode) {
   const augs = Array.isArray(d.augs) ? d.augs.filter(x => typeof x === 'string').map(x => AUGS[x] ? x : H2ID[x]).filter(Boolean).slice(0, 14).map(x => ICON(x, 5)).join('') : '';
-  return `<li class="rk ${me ? 'me' : ''}" style="animation-delay:${Math.min(i, 12) * .03}s"><span class="pos">${i + 1}</span><span class="who"><b>${esc(nick)}</b><small>${augs || T('noAugs')}</small></span><span class="res"><b>${T('stageN', +d.stage || 0)}</b><small>${T('pts', fmt(+d.score || 0))}</small></span></li>`;
+  const pts = T('pts', fmt(+d.score || 0));
+  const res = mode === 'quick' ? `<b>${pts}</b>` : mode === 'inf' ? `<b>${T('waveN', +d.wave || 0)}</b><small>${pts}</small>` : `<b>${T('stageN', +d.stage || 0)}</b><small>${pts}</small>`;
+  return `<li class="rk ${me ? 'me' : ''}" style="animation-delay:${Math.min(i, 12) * .03}s"><span class="pos">${i + 1}</span><span class="who"><b>${esc(nick)}</b><small>${augs || T('noAugs')}</small></span><span class="res">${res}</span></li>`;
 }
 function globalRows() {
-  if (!RANK.db || (RANK.failed && !RANK.ready)) {
-    if (RANK.failed) return `<li class="note">${T('rankFail')}</li>`;
-    return `<li class="note">${T('rankLoading')}</li>`;
-  }
-  if (!RANK.ready) return `<li class="note">${T('rankLoading')}</li>`;
-  if (!RANK.list.length) return `<li class="note">${T('rankEmpty')}</li>`;
+  const st = RANK.m[rankMode];
+  if (!RANK.db) return `<li class="note">${T(RANK.failed ? 'rankFail' : 'rankLoading')}</li>`;
+  if (!st.ready) return `<li class="note">${T(st.failed ? 'rankFail' : 'rankLoading')}</li>`;
+  const list = st.list.filter(d => +d.score >= 0 && (rankMode !== 'stage' || +d.stage >= 1));
+  if (!list.length) return `<li class="note">${T('rankEmpty')}</li>`;
   const foot = canSubmit() ? '' : `<li class="note">${T('rankInviteOnly')}</li>`;
-  return RANK.list.map((d, i) => rowHTML(i, typeof d.nick === 'string' ? d.nick.slice(0, 12) : T('noName'), d, d.id === RANK.uid)).join('') + foot;
+  return list.map((d, i) => rowHTML(i, typeof d.nick === 'string' ? d.nick.slice(0, 12) : T('noName'), d, d.id === RANK.uid, rankMode)).join('') + foot;
 }
+// 기기 기록: 모드마다 10개 (1분·무한은 v32부터 쌓음 — 그 전 최고 기록 하나로 시작)
+const RUNS_KEY = {stage:'runs', quick:'qruns', inf:'iruns'};
+function getRuns(mode) {
+  let runs = store.get(RUNS_KEY[mode], null);
+  if (runs) return runs;
+  runs = [];
+  if (mode === 'quick') { const b = store.get('quick-best', null); if (b) runs.push({score:b.score, key:b.score, augs:[], at:b.at || 0}); }
+  if (mode === 'inf') { const b = store.get('inf-best', null); if (b) runs.push({wave:b.level, score:b.score, key:b.score, augs:[], at:0}); }
+  return runs;
+}
+function pushRun(mode, run) { const had = store.get(RUNS_KEY[mode], null); let runs = getRuns(mode); if (!had) runs = runs.filter(r => r.key !== run.key); runs.push(run); runs.sort((p, q) => q.key - p.key); store.set(RUNS_KEY[mode], runs.slice(0, 10)); }
 function localRows() {
-  const runs = store.get('runs', []);
+  const runs = getRuns(rankMode);
   if (!runs.length) return `<li class="note">${T('noRuns')}</li>`;
-  return runs.map((r, i) => rowHTML(i, new Date(r.at).toLocaleDateString(LOCALE[LANG], {month:'short', day:'numeric'}), r, S.lastRun && r.at === S.lastRun.at)).join('');
+  const cur = S.lastSub && S.lastSub.mode === rankMode ? S.lastSub.run.at : -1;
+  return runs.map((r, i) => rowHTML(i, r.at ? new Date(r.at).toLocaleDateString(LOCALE[LANG], {month:'short', day:'numeric'}) : '—', r, r.at === cur, rankMode)).join('');
 }
 
 /* ---------- augments ---------- */
