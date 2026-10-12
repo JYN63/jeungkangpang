@@ -40,7 +40,15 @@ head = f'''<!doctype html><html lang="ko"><head><meta charset="utf-8">
 <noscript><h1>증강팡</h1><p>{desc}</p><p>자바스크립트를 켜야 게임을 할 수 있어요.</p></noscript>'''
 tail = '''
 <script>
-if ('serviceWorker' in navigator && location.protocol === 'https:') addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  // 새 버전이 올라오면: 첫 화면에 있을 때만 바로 새로고침(게임 중에는 다음 실행 때 적용)
+  const hadSW = !!navigator.serviceWorker.controller; let reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!hadSW || reloaded || !document.body.classList.contains('at-title')) return;
+    reloaded = true; location.reload();
+  });
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').then(r => r.update()).catch(() => {}));
+}
 </script>
 </body></html>'''
 open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(head + src.rstrip('\n') + tail)
