@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="증강팡">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "증강팡", "alternateName": ["Augment Pop", "jeungkangpang"], "url": "https://jyn63.github.io/jeungkangpang/", "description": "증강팡은 애니팡처럼 같은 색 타일을 맞춰 터뜨리고, 증강을 골라 더 멀리 가는 무료 매치-3 퍼즐 게임이에요. 1분 모드, 무한 모드, 한옥 테마와 국악 배경음악까지. 설치 없이 휴대폰 브라우저에서 바로 즐기세요.", "genre": ["Puzzle", "Match 3"], "gamePlatform": ["Web browser", "Android", "iOS"], "applicationCategory": "Game", "operatingSystem": "Any", "inLanguage": ["ko", "en", "ja", "zh", "it"], "author": {"@type": "Person", "name": "이정연"}, "image": "https://jyn63.github.io/jeungkangpang/icon-512.png", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}}</script>
-<script>window.JKP_FIREBASE = null;</script>
+<script>window.JKP_FIREBASE = {"apiKey": "AIzaSyDiTJx60zBFbBKSWf-Cm5dfJm99aeTRiyU", "projectId": "jeungkangpang"};</script>
 <style>html{-webkit-text-size-adjust:100%}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}.seo{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style></head><body>
 <h1 class="seo">증강팡 (Augment Pop)</h1><p class="seo">증강팡은 애니팡처럼 같은 색 타일을 맞춰 터뜨리고, 증강을 골라 더 멀리 가는 무료 매치-3 퍼즐 게임이에요. 1분 모드, 무한 모드, 한옥 테마와 국악 배경음악까지. 설치 없이 휴대폰 브라우저에서 바로 즐기세요.</p>
 <noscript><h1>증강팡</h1><p>증강팡은 애니팡처럼 같은 색 타일을 맞춰 터뜨리고, 증강을 골라 더 멀리 가는 무료 매치-3 퍼즐 게임이에요. 1분 모드, 무한 모드, 한옥 테마와 국악 배경음악까지. 설치 없이 휴대폰 브라우저에서 바로 즐기세요.</p><p>자바스크립트를 켜야 게임을 할 수 있어요.</p></noscript>
@@ -3636,8 +3636,10 @@ function fireDB(cfg) {
     RANK.db = db;
     if (!db) { RANK.failed = true; refreshRankViews(); return; }
     db.collection('rank').orderBy('key', 'desc').limit(50).onSnapshot(snap => {
-      RANK.list = snap.docs.map(d => Object.assign({id:d.id}, d.data())); RANK.ready = true; refreshRankViews();
-    }, () => { RANK.failed = true; refreshRankViews(); });
+      RANK.list = snap.docs.map(d => Object.assign({id:d.id}, d.data())); RANK.ready = true; RANK.failed = false;
+      if (!RANK.uid && typeof db.uid === 'function') db.uid().then(u => { RANK.uid = u; refreshRankViews(); }).catch(() => {});   // 웹: 로그인이 처음에 실패했어도 다시 시도
+      refreshRankViews();
+    }, () => { if (!RANK.ready) { RANK.failed = true; refreshRankViews(); } });   // 웹은 30초마다 다시 받으니 한 번 실패로 랭킹을 닫지 않음
     refreshRankViews();
   } catch (e) { RANK.failed = true; }
 })();
