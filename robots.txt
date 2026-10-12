@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://jyn63.github.io/jeungkangpang/sitemap.xml

@@ -1,0 +1,17 @@
+rules_version = '2';
+// 증강팡 랭킹 규칙: 누구나 읽기, 자기 기록(rank/자기uid)만 쓰기, 값 모양 검사
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /rank/{uid} {
+      allow read: if true;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['nick', 'stage', 'score', 'key', 'augs', 'at'])
+        && request.resource.data.nick is string && request.resource.data.nick.size() > 0 && request.resource.data.nick.size() <= 12
+        && request.resource.data.stage is int && request.resource.data.stage >= 1 && request.resource.data.stage <= 300
+        && request.resource.data.score is int && request.resource.data.score >= 0 && request.resource.data.score < 1000000000
+        && request.resource.data.key == request.resource.data.stage * 1000000000 + request.resource.data.score
+        && (!('augs' in request.resource.data) || (request.resource.data.augs is list && request.resource.data.augs.size() <= 24));
+      allow delete: if false;
+    }
+  }
+}
