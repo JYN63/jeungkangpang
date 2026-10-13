@@ -216,6 +216,9 @@ canvas{display:block;width:100%;touch-action:none;border-radius:16px}
 .acctbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 8px;margin:10px 0 0;font-size:13px;color:var(--muted)}
 .linkbtn{border:0;background:none;padding:6px 4px;color:#c7801f;font:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .submit p.who{font-weight:700;color:var(--ink)}
+.qacct .row input{flex:1 1 0;width:0;min-width:0}
+.qacct .row button{flex:1 1 0;min-width:0;padding:0 8px;font-size:14px;line-height:1.1}
+.submit button.alt{background:#fff;color:var(--ink);border:2px solid var(--rim);box-shadow:0 3px 0 var(--rim)}
 .rkmode{flex:1;min-height:40px;padding:0 6px;border:2px solid var(--rim);border-radius:12px;background:rgba(255,255,255,.7);color:var(--muted);font:var(--dw) 15px var(--display);cursor:pointer;line-height:1.1}
 .rkmode.on{border-color:transparent;background:var(--gold);color:#fff;text-shadow:0 1px 0 #c7801f;box-shadow:0 3px 0 #c7801f}
 .tab{flex:1;height:38px;border:0;border-radius:11px;background:transparent;color:var(--muted);font:var(--dw) 16px var(--display);cursor:pointer}
@@ -898,7 +901,7 @@ I18N.ko = {
   nickEmpty:'이름을 한 글자 이상 적어 주세요.', submitting:'등록하는 중…', keptHigher:'이미 등록된 기록이 더 높아서 그대로 둘게요.',
   submitted:'전체 랭킹에 등록했어요.', submitBlocked:'이 화면에서는 랭킹에 기록을 등록할 수 없어요.', submitFail:'등록하지 못했어요. 잠시 뒤에 다시 눌러 주세요.',
   acctEyebrow:"증강팡 계정", acctTitleNew:"닉네임 만들기", acctTitleLogin:"로그인", acctTabNew:"처음이에요", acctTabLogin:"계정이 있어요", acctLead:"계정을 만들면 랭킹에 내 닉네임으로 기록이 올라가요. 다른 기기에서도 같은 계정으로 이어서 올릴 수 있어요.", acctNick:"닉네임", acctNickPh:"1~12글자", acctPw:"비밀번호", acctPwPh:"6글자 이상", acctNote:"비밀번호를 잊으면 찾을 수 없으니 꼭 기억해 두세요.", acctGoNew:"가입하고 시작하기", acctGoLogin:"로그인", acctLater:"나중에 할게요", acctBusy:"잠깐만요…", acctWelcome:n => `${n}님, 반가워요!`, acctBar:n => `${n}님으로 로그인 중`, acctLogout:"로그아웃", acctLogin:"로그인하기", acctBye:"로그아웃했어요", needLogin:"로그인하면 이 기록이 랭킹에 올라가요.", errNickTaken:"이미 누가 쓰고 있는 닉네임이에요. 다른 이름을 골라 주세요.", errLogin:"닉네임이나 비밀번호가 맞지 않아요.", errPwShort:"비밀번호는 6글자 이상으로 적어 주세요.", errNickBad:"닉네임은 1~12글자로 적어 주세요.", errOff:"지금은 처리할 수 없어요. 잠시 뒤에 다시 해 주세요.", errMany:"시도가 너무 많아요. 잠시 뒤에 다시 해 주세요.", retry:"다시 등록하기",
-  setShake:'화면 흔들림', shakeOff:'끄기', shakeLow:'약하게', shakeMid:'보통', rkStage:'스테이지', rkQuick:'1분', rkInf:'무한', waveN:l => `${l}단계`, rankEyebrow:'랭킹', rankTitle:'명예의 전당', tabAll:'전체', tabMe:'내 기록', back:'돌아가기', noAugs:'증강 없음',
+  setShake:'화면 흔들림', shakeOff:'끄기', shakeLow:'약하게', shakeMid:'보통', acctGoPost:'가입하고 등록', acctGoLoginPost:'로그인하고 등록', needStage1:'스테이지를 1개 이상 깨면 랭킹에 올라가요.', rkStage:'스테이지', rkQuick:'1분', rkInf:'무한', waveN:l => `${l}단계`, rankEyebrow:'랭킹', rankTitle:'명예의 전당', tabAll:'전체', tabMe:'내 기록', back:'돌아가기', noAugs:'증강 없음',
   rankFail:"지금은 전체 랭킹을 불러올 수 없어요. '내 기록' 탭에서 이 기기 기록을 볼 수 있어요.", rankLoading:'랭킹을 불러오는 중…',
   rankEmpty:'아직 등록된 기록이 없어요. 한 판 끝내고 첫 번째 주인공이 되어 보세요.',
   rankInviteOnly:'랭킹 등록은 초대받은 플레이어만 할 수 있어요. 게임과 랭킹 구경은 누구나 할 수 있어요.',
@@ -1084,7 +1087,7 @@ I18N.en = {
   nickEmpty:'Please enter at least one character.', submitting:'Submitting…', keptHigher:'Your existing record is higher, so we kept it.',
   submitted:'Added to the global leaderboard!', submitBlocked:"Records can't be submitted from this screen.", submitFail:"Couldn't submit. Please try again in a moment.",
   acctEyebrow:"Augment Pop account", acctTitleNew:"Create a nickname", acctTitleLogin:"Log in", acctTabNew:"I'm new", acctTabLogin:"I have an account", acctLead:"With an account, your scores go on the leaderboard under your nickname, and you can keep posting from other devices too.", acctNick:"Nickname", acctNickPh:"1–12 characters", acctPw:"Password", acctPwPh:"At least 6 characters", acctNote:"A forgotten password can't be recovered, so keep it somewhere safe.", acctGoNew:"Sign up and play", acctGoLogin:"Log in", acctLater:"Maybe later", acctBusy:"One moment…", acctWelcome:n => `Welcome, ${n}!`, acctBar:n => `Logged in as ${n}`, acctLogout:"Log out", acctLogin:"Log in", acctBye:"Logged out", needLogin:"Log in to post this score to the leaderboard.", errNickTaken:"That nickname is already taken. Please pick another one.", errLogin:"Wrong nickname or password.", errPwShort:"Please use at least 6 characters for your password.", errNickBad:"Nicknames must be 1–12 characters.", errOff:"That didn't go through. Please try again in a moment.", errMany:"Too many attempts. Please try again in a moment.", retry:"Resubmit score",
-  setShake:'Screen shake', shakeOff:'Off', shakeLow:'Light', shakeMid:'Normal', rkStage:'Stage', rkQuick:'1-Minute', rkInf:'Endless', waveN:l => `Wave ${l}`, rankEyebrow:'Leaderboard', rankTitle:'Hall of Fame', tabAll:'Global', tabMe:'My records', back:'Back', noAugs:'No augments',
+  setShake:'Screen shake', shakeOff:'Off', shakeLow:'Light', shakeMid:'Normal', acctGoPost:'Sign up & post', acctGoLoginPost:'Log in & post', needStage1:'Clear at least one stage to get on the leaderboard.', rkStage:'Stage', rkQuick:'1-Minute', rkInf:'Endless', waveN:l => `Wave ${l}`, rankEyebrow:'Leaderboard', rankTitle:'Hall of Fame', tabAll:'Global', tabMe:'My records', back:'Back', noAugs:'No augments',
   rankFail:"Couldn't load the global leaderboard right now. You can still see this device's records in the 'My records' tab.", rankLoading:'Loading leaderboard…',
   rankEmpty:'No records yet. Finish a run and claim the top spot!',
   rankInviteOnly:'Only invited players can post to the leaderboard, but anyone can play and view it.',
@@ -1270,7 +1273,7 @@ I18N.ja = {
   nickEmpty:'名前を1文字以上入力してください。', submitting:'登録中…', keptHigher:'登録済みの記録のほうが高いので、そのままにします。',
   submitted:'全体ランキングに登録しました。', submitBlocked:'この画面ではランキングに記録を登録できません。', submitFail:'登録できませんでした。しばらくしてからもう一度お試しください。',
   acctEyebrow:"オーグメントポップ アカウント", acctTitleNew:"ニックネームを作る", acctTitleLogin:"ログイン", acctTabNew:"はじめての方", acctTabLogin:"アカウントがある方", acctLead:"アカウントを作ると、ランキングにニックネームで記録が載ります。ほかの端末からも同じアカウントで記録を送れます。", acctNick:"ニックネーム", acctNickPh:"1〜12文字", acctPw:"パスワード", acctPwPh:"6文字以上", acctNote:"パスワードを忘れると再設定できないので、必ず覚えておいてください。", acctGoNew:"登録してはじめる", acctGoLogin:"ログイン", acctLater:"あとで", acctBusy:"少々お待ちください…", acctWelcome:n => `${n}さん、ようこそ！`, acctBar:n => `${n}さんでログイン中`, acctLogout:"ログアウト", acctLogin:"ログインする", acctBye:"ログアウトしました", needLogin:"ログインすると、この記録がランキングに載ります。", errNickTaken:"そのニックネームはすでに使われています。ほかの名前を選んでください。", errLogin:"ニックネームかパスワードが違います。", errPwShort:"パスワードは6文字以上で入力してください。", errNickBad:"ニックネームは1〜12文字で入力してください。", errOff:"いまは処理できません。しばらくしてからもう一度お試しください。", errMany:"試行回数が多すぎます。しばらくしてからもう一度お試しください。", retry:"もう一度送信する",
-  setShake:'画面の揺れ', shakeOff:'オフ', shakeLow:'弱め', shakeMid:'ふつう', rkStage:'ステージ', rkQuick:'1分', rkInf:'エンドレス', waveN:l => `ウェーブ${l}`, rankEyebrow:'ランキング', rankTitle:'名誉の殿堂', tabAll:'全体', tabMe:'自分の記録', back:'戻る', noAugs:'オーグメントなし',
+  setShake:'画面の揺れ', shakeOff:'オフ', shakeLow:'弱め', shakeMid:'ふつう', acctGoPost:'登録して送信', acctGoLoginPost:'ログインして送信', needStage1:'ステージを1つ以上クリアするとランキングに載ります。', rkStage:'ステージ', rkQuick:'1分', rkInf:'エンドレス', waveN:l => `ウェーブ${l}`, rankEyebrow:'ランキング', rankTitle:'名誉の殿堂', tabAll:'全体', tabMe:'自分の記録', back:'戻る', noAugs:'オーグメントなし',
   rankFail:'現在、全体ランキングを読み込めません。「自分の記録」タブでこの端末の記録を見られます。', rankLoading:'ランキングを読み込み中…',
   rankEmpty:'まだ記録がありません。1回プレイして、最初のランカーになりましょう！',
   rankInviteOnly:'ランキングへの登録は、招待されたプレイヤーだけができます。ゲームのプレイとランキングの閲覧は、どなたでもできます。',
@@ -1456,7 +1459,7 @@ I18N.zh = {
   nickEmpty:'请至少输入一个字。', submitting:'提交中…', keptHigher:'已提交的纪录更高，保持不变。',
   submitted:'已提交到总排行榜。', submitBlocked:'此页面无法向排行榜提交纪录。', submitFail:'提交失败，请稍后再试。',
   acctEyebrow:"强化消消乐账号", acctTitleNew:"创建昵称", acctTitleLogin:"登录", acctTabNew:"我是新玩家", acctTabLogin:"我已有账号", acctLead:"有了账号，你的成绩会以昵称登上排行榜，在其他设备上也能用同一个账号继续上传。", acctNick:"昵称", acctNickPh:"1～12个字", acctPw:"密码", acctPwPh:"至少6个字符", acctNote:"忘记密码后无法找回，请务必记好。", acctGoNew:"注册并开始", acctGoLogin:"登录", acctLater:"以后再说", acctBusy:"请稍候…", acctWelcome:n => `${n}，欢迎！`, acctBar:n => `已登录：${n}`, acctLogout:"退出登录", acctLogin:"登录", acctBye:"已退出登录", needLogin:"登录后，这次成绩就会登上排行榜。", errNickTaken:"这个昵称已被使用，请换一个。", errLogin:"昵称或密码不正确。", errPwShort:"密码至少需要6个字符。", errNickBad:"昵称须为1～12个字。", errOff:"暂时无法处理，请稍后再试。", errMany:"尝试次数过多，请稍后再试。", retry:"重新上传",
-  setShake:'画面震动', shakeOff:'关闭', shakeLow:'轻微', shakeMid:'正常', rkStage:'关卡', rkQuick:'1分钟', rkInf:'无尽', waveN:l => `第${l}波`, rankEyebrow:'排行榜', rankTitle:'名人堂', tabAll:'全部', tabMe:'我的纪录', back:'返回', noAugs:'无强化',
+  setShake:'画面震动', shakeOff:'关闭', shakeLow:'轻微', shakeMid:'正常', acctGoPost:'注册并上传', acctGoLoginPost:'登录并上传', needStage1:'至少通过1关才能登上排行榜。', rkStage:'关卡', rkQuick:'1分钟', rkInf:'无尽', waveN:l => `第${l}波`, rankEyebrow:'排行榜', rankTitle:'名人堂', tabAll:'全部', tabMe:'我的纪录', back:'返回', noAugs:'无强化',
   rankFail:'暂时无法加载总排行榜。可以在“我的纪录”标签页查看本设备的纪录。', rankLoading:'正在加载排行榜…',
   rankEmpty:'还没有纪录。玩完一局，来当第一个上榜的人吧！',
   rankInviteOnly:'只有受邀玩家才能提交纪录。任何人都可以玩游戏和查看排行榜。',
@@ -1642,7 +1645,7 @@ I18N.it = {
   nickEmpty:'Inserisci almeno un carattere.', submitting:'Invio in corso…', keptHigher:'Il tuo record già registrato è più alto, quindi lo manteniamo.',
   submitted:'Aggiunto alla classifica globale.', submitBlocked:'Da questa schermata non è possibile inviare record.', submitFail:'Invio non riuscito. Riprova tra qualche istante.',
   acctEyebrow:"Account di Augment Pop", acctTitleNew:"Crea un nickname", acctTitleLogin:"Accedi", acctTabNew:"Prima volta", acctTabLogin:"Ho già un account", acctLead:"Con un account i tuoi punteggi entrano in classifica con il tuo nickname, e puoi continuare a pubblicarli anche da altri dispositivi.", acctNick:"Nickname", acctNickPh:"1–12 caratteri", acctPw:"Password", acctPwPh:"Almeno 6 caratteri", acctNote:"Una password dimenticata non si può recuperare: conservala con cura.", acctGoNew:"Registrati e gioca", acctGoLogin:"Accedi", acctLater:"Più tardi", acctBusy:"Un attimo…", acctWelcome:n => `Ciao, ${n}!`, acctBar:n => `Connesso come ${n}`, acctLogout:"Esci", acctLogin:"Accedi", acctBye:"Logout effettuato", needLogin:"Accedi per pubblicare questo punteggio in classifica.", errNickTaken:"Questo nickname è già in uso. Scegline un altro.", errLogin:"Nickname o password non corretti.", errPwShort:"La password deve avere almeno 6 caratteri.", errNickBad:"Il nickname deve avere da 1 a 12 caratteri.", errOff:"Non è stato possibile completare l’operazione. Riprova tra poco.", errMany:"Troppi tentativi. Riprova tra poco.", retry:"Invia di nuovo",
-  setShake:'Tremolio dello schermo', shakeOff:'Spento', shakeLow:'Leggero', shakeMid:'Normale', rkStage:'Livelli', rkQuick:'1 minuto', rkInf:'Infinita', waveN:l => `Ondata ${l}`, rankEyebrow:'Classifica', rankTitle:'Albo d’oro', tabAll:'Globale', tabMe:'I miei record', back:'Indietro', noAugs:'Nessun potenziamento',
+  setShake:'Tremolio dello schermo', shakeOff:'Spento', shakeLow:'Leggero', shakeMid:'Normale', acctGoPost:'Registrati e invia', acctGoLoginPost:'Accedi e invia', needStage1:'Supera almeno un livello per entrare in classifica.', rkStage:'Livelli', rkQuick:'1 minuto', rkInf:'Infinita', waveN:l => `Ondata ${l}`, rankEyebrow:'Classifica', rankTitle:'Albo d’oro', tabAll:'Globale', tabMe:'I miei record', back:'Indietro', noAugs:'Nessun potenziamento',
   rankFail:'Al momento non è possibile caricare la classifica globale. Puoi vedere i record di questo dispositivo nella scheda «I miei record».', rankLoading:'Caricamento classifica…',
   rankEmpty:'Ancora nessun record. Finisci una partita e conquista il primo posto!',
   rankInviteOnly:'Solo i giocatori invitati possono inviare record. Chiunque può giocare e consultare la classifica.',
@@ -2004,7 +2007,7 @@ function mission(id, v) {
   store.set('missions', m);
 }
 /* ---------- 재화 · 아이템 ---------- */
-const GAME_VER = 35;   // 설정 화면 맨 아래에 작게 보임(어느 버전이 실행 중인지 확인용) — 고칠 때마다 올리기
+const GAME_VER = 36;   // 설정 화면 맨 아래에 작게 보임(어느 버전이 실행 중인지 확인용) — 고칠 때마다 올리기
 const DEBUG_RICH = false;   // 디버그(테스트) 판에서만 true: 별사탕·구슬 99,999 고정, 써도 줄지 않음, 랭킹 끔
 const wallet = () => DEBUG_RICH ? {candy:99999, marble:99999} : Object.assign({candy:0, marble:0}, store.get('wallet', {}));
 function addWallet(c = 0, m = 0) { if (DEBUG_RICH) { refreshWallet(); return wallet(); } const w = wallet(); w.candy = Math.max(0, w.candy + c); w.marble = Math.max(0, w.marble + m); store.set('wallet', w); refreshWallet(); return w; }
@@ -3717,8 +3720,12 @@ function rankDoc(sub, nick) {
   const run = sub.run, base = {nick, score:run.score, key:run.key, augs:run.augs.slice(0, 24), at:new Date().toISOString()};
   return sub.mode === 'stage' ? Object.assign(base, {stage:run.stage}) : sub.mode === 'inf' ? Object.assign(base, {wave:run.wave}) : base;
 }
-async function sendRun(sub) {
+function sendRun(sub) {
   sub.state = 'sending';
+  RANK.q = (RANK.q || Promise.resolve()).then(() => doSendRun(sub));
+  return RANK.q;
+}
+async function doSendRun(sub) {
   try {
     const ref = RANK.db.doc(RANK_COL[sub.mode] + '/' + RANK.uid), cur = await ref.get(), nick = RANK.acct.nick;
     if (cur.exists && (cur.data().key || 0) >= sub.run.key) { if (cur.data().nick !== nick) await ref.update({nick}); sub.state = 'kept'; }
@@ -3727,15 +3734,53 @@ async function sendRun(sub) {
   } catch (e) { sub.state = 'fail'; }
   if (S.lastSub === sub && S.mode === 'over') renderSubmit();
 }
+const runOk = (mode, run) => !!run && (mode === 'stage' ? run.stage >= 1 : run.score >= 1 && (mode !== 'inf' || run.wave >= 1));
+function syncBest() {
+  if (!RANK.acct) return;
+  for (const mode of Object.keys(RANK_COL)) {
+    const best = getRuns(mode)[0];
+    if (runOk(mode, best) && !(S.lastSub && S.lastSub.mode === mode && S.lastSub.run.key >= best.key && S.mode === 'over')) sendRun({mode, run:best});
+  }
+}
+async function doAuth(isNew, n, p) {   // 계정 창·결과 화면 공통: 성공하면 null, 실패하면 보여 줄 문구
+  n = n.trim().normalize('NFC');
+  if (!n || [...n].length > 12 || /[\u0000-\u001f<>]/.test(n)) return T('errNickBad');
+  if (p.length < 6) return T('errPwShort');
+  try {
+    const a = await (isNew ? RANK.auth.signUp(n, p) : RANK.auth.signIn(n, p));
+    RANK.acct = a; RANK.uid = a.uid; store.set('acct-asked', true); SFX.pick(); toast(T('acctWelcome', a.nick), 1800);
+    syncBest(); return null;
+  } catch (er) { return T(ACCT_ERR[er && er.code] || 'errOff'); }
+}
 function renderSubmit() {
   const box = $('submitBox'), sub = S.lastSub; if (!box || !sub) return;
-  const okRun = sub.mode === 'stage' ? sub.run.stage >= 1 : sub.run.score >= 1 && (sub.mode !== 'inf' || sub.run.wave >= 1);
+  const okRun = runOk(sub.mode, sub.run);
+  if (RANK.auth && RANK.db && !okRun && sub.mode === 'stage') { box.innerHTML = `<div class="submit"><p>${T('needStage1')}</p></div>`; box.dataset.state = 'stage0'; return; }
   if (RANK.auth && RANK.db && okRun) {   // 공개 웹사이트: 계정으로 자동 등록(이름을 따로 적지 않음 → 한 사람 한 줄)
     if (!RANK.acct) {
       if (box.dataset.state === 'login') return;
       box.dataset.state = 'login';
-      box.innerHTML = `<div class="submit"><p>${T('needLogin')}</p><button type="button" id="loginBtn">${T('acctLogin')}</button></div>`;
-      $('loginBtn').onclick = () => openAccount(sub.back || showTitle);
+      let isNew = true, busy = false;
+      box.innerHTML = `<form class="submit qacct" id="qAcct" novalidate>
+        <p class="who">${T('needLogin')}</p>
+        <div class="row"><input id="qNick" maxlength="12" autocomplete="username" autocapitalize="off" spellcheck="false" placeholder="${T('acctNick')}" aria-label="${T('acctNick')}">
+        <input id="qPw" type="password" autocomplete="new-password" placeholder="${T('acctPw')}" aria-label="${T('acctPw')}"></div>
+        <div class="row"><button type="submit" id="qGo">${T('acctGoPost')}</button><button type="button" class="alt" id="qSwap">${T('acctTabLogin')}</button></div>
+        <p id="qMsg">${T('acctNote')}</p></form>`;
+      const msg = (t, cls) => { const m = $('qMsg'); if (m) { m.textContent = t; m.className = cls || ''; } };
+      $('qSwap').onclick = () => {
+        isNew = !isNew; SFX.pick();
+        $('qGo').textContent = T(isNew ? 'acctGoPost' : 'acctGoLoginPost'); $('qSwap').textContent = T(isNew ? 'acctTabLogin' : 'acctTabNew');
+        $('qPw').autocomplete = isNew ? 'new-password' : 'current-password'; msg(isNew ? T('acctNote') : '');
+      };
+      $('qAcct').onsubmit = async e => {
+        e.preventDefault(); if (busy) return;
+        busy = true; $('qGo').disabled = true; msg(T('acctBusy'));
+        const err = await doAuth(isNew, $('qNick').value, $('qPw').value);
+        busy = false; if ($('qGo')) $('qGo').disabled = false;
+        if (err) { msg(err, 'err'); return; }
+        box.dataset.state = ''; renderSubmit();   // 로그인됨 → 이 판 기록을 바로 등록
+      };
       return;
     }
     if (!sub.state) sendRun(sub);
@@ -3878,17 +3923,10 @@ function openAccount(back, first) {
     const say = (t, cls) => { const m = $('acMsg'); if (m) { m.textContent = t; m.className = 'acmsg' + (cls ? ' ' + cls : ''); } };
     $('acctForm').onsubmit = async e => {
       e.preventDefault(); if (busy) return;
-      const n = $('acNick').value.trim().normalize('NFC'), p = $('acPw').value;
-      if (!n || [...n].length > 12 || /[\u0000-\u001f<>]/.test(n)) { say(T('errNickBad'), 'err'); return; }
-      if (p.length < 6) { say(T('errPwShort'), 'err'); return; }
       busy = true; $('acGo').disabled = true; say(T('acctBusy'));
-      try {
-        const a = await (acctTab === 'new' ? RANK.auth.signUp(n, p) : RANK.auth.signIn(n, p));
-        RANK.acct = a; RANK.uid = a.uid; store.set('acct-asked', true); SFX.pick(); toast(T('acctWelcome', a.nick), 1800); back();
-      } catch (er) {
-        busy = false; if ($('acGo')) $('acGo').disabled = false;
-        say(T(ACCT_ERR[er && er.code] || 'errOff'), 'err');
-      }
+      const err = await doAuth(acctTab === 'new', $('acNick').value, $('acPw').value);
+      if (!err) { back(); return; }
+      busy = false; if ($('acGo')) $('acGo').disabled = false; say(err, 'err');
     };
   };
   render();
