@@ -2007,7 +2007,7 @@ function mission(id, v) {
   store.set('missions', m);
 }
 /* ---------- 재화 · 아이템 ---------- */
-const GAME_VER = 36;   // 설정 화면 맨 아래에 작게 보임(어느 버전이 실행 중인지 확인용) — 고칠 때마다 올리기
+const GAME_VER = 37;   // 설정 화면 맨 아래에 작게 보임(어느 버전이 실행 중인지 확인용) — 고칠 때마다 올리기
 const DEBUG_RICH = false;   // 디버그(테스트) 판에서만 true: 별사탕·구슬 99,999 고정, 써도 줄지 않음, 랭킹 끔
 const wallet = () => DEBUG_RICH ? {candy:99999, marble:99999} : Object.assign({candy:0, marble:0}, store.get('wallet', {}));
 function addWallet(c = 0, m = 0) { if (DEBUG_RICH) { refreshWallet(); return wallet(); } const w = wallet(); w.candy = Math.max(0, w.candy + c); w.marble = Math.max(0, w.marble + m); store.set('wallet', w); refreshWallet(); return w; }
@@ -3748,7 +3748,7 @@ async function doAuth(isNew, n, p) {   // 계정 창·결과 화면 공통: 성�
   if (p.length < 6) return T('errPwShort');
   try {
     const a = await (isNew ? RANK.auth.signUp(n, p) : RANK.auth.signIn(n, p));
-    RANK.acct = a; RANK.uid = a.uid; store.set('acct-asked', true); SFX.pick(); toast(T('acctWelcome', a.nick), 1800);
+    RANK.acct = a; RANK.uid = a.uid; ACCT_ASKED = true; SFX.pick(); toast(T('acctWelcome', a.nick), 1800);
     syncBest(); return null;
   } catch (er) { return T(ACCT_ERR[er && er.code] || 'errOff'); }
 }
@@ -3894,6 +3894,7 @@ function localRows() {
 
 /* ---------- 계정 (공개 웹사이트) ---------- */
 let acctTab = 'new';
+let ACCT_ASKED = false;   // 로그인 안 했으면 게임을 열 때마다(페이지를 새로 열 때마다) 한 번씩 계정 창을 띄운다 — '나중에 할게요'를 누르면 이번에만 안 뜸
 const ACCT_ERR = {EMAIL_EXISTS:'errNickTaken', INVALID_LOGIN_CREDENTIALS:'errLogin', INVALID_PASSWORD:'errLogin', EMAIL_NOT_FOUND:'errLogin', USER_DISABLED:'errLogin',
   WEAK_PASSWORD:'errPwShort', TOO_MANY_ATTEMPTS_TRY_LATER:'errMany'};
 function openAccount(back, first) {
@@ -3919,7 +3920,7 @@ function openAccount(back, first) {
       <button class="ghost" id="acLater">${T(first ? 'acctLater' : 'back')}</button>`);
     $('acNick').value = nick; $('acPw').value = pw;
     $('sheet').querySelectorAll('.tab').forEach(b => b.onclick = () => { if (busy || acctTab === b.dataset.tab) return; acctTab = b.dataset.tab; SFX.pick(); render(); });
-    $('acLater').onclick = () => { if (busy) return; SFX.pick(); if (first) store.set('acct-asked', true); back(); };
+    $('acLater').onclick = () => { if (busy) return; SFX.pick(); if (first) ACCT_ASKED = true; back(); };
     const say = (t, cls) => { const m = $('acMsg'); if (m) { m.textContent = t; m.className = 'acmsg' + (cls ? ' ' + cls : ''); } };
     $('acctForm').onsubmit = async e => {
       e.preventDefault(); if (busy) return;
@@ -4202,8 +4203,8 @@ function showTitle() {
   $('glossOpen').onclick = () => openGlossary(showTitle, T('back'));
   $('setOpen').onclick = () => openSettings(showTitle, true);
   if (window.__installBind) window.__installBind();
-  // 공개 웹사이트에서 처음 열면 한 번만 계정 만들기/로그인 창(나중에 하기 가능 — 랭킹 창에서 언제든 로그인)
-  if (RANK.auth && !RANK.acct && !store.get('acct-asked', false)) openAccount(showTitle, true);
+  // 공개 웹사이트: 로그인 안 했으면 게임을 열 때마다 한 번 계정 만들기/로그인 창(나중에 하기 가능)
+  if (RANK.auth && !RANK.acct && !ACCT_ASKED) openAccount(showTitle, true);
   if (!grid.length || !grid.some(row => row.some(Boolean))) genBoard(designMap(1));
 }
 function confirmNew(label, go) {
